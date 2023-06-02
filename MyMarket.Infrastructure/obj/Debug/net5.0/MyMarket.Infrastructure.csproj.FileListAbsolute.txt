@@ -1,0 +1,12 @@
+C:\Users\Baran\Desktop\MyMarket_Vs\MyMarket.Infrastructure\bin\Debug\net5.0\MyMarket.Infrastructure.deps.json
+C:\Users\Baran\Desktop\MyMarket_Vs\MyMarket.Infrastructure\bin\Debug\net5.0\MyMarket.Infrastructure.dll
+C:\Users\Baran\Desktop\MyMarket_Vs\MyMarket.Infrastructure\bin\Debug\net5.0\ref\MyMarket.Infrastructure.dll
+C:\Users\Baran\Desktop\MyMarket_Vs\MyMarket.Infrastructure\bin\Debug\net5.0\MyMarket.Infrastructure.pdb
+C:\Users\Baran\Desktop\MyMarket_Vs\MyMarket.Infrastructure\obj\Debug\net5.0\MyMarket.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\Baran\Desktop\MyMarket_Vs\MyMarket.Infrastructure\obj\Debug\net5.0\MyMarket.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Baran\Desktop\MyMarket_Vs\MyMarket.Infrastructure\obj\Debug\net5.0\MyMarket.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\Baran\Desktop\MyMarket_Vs\MyMarket.Infrastructure\obj\Debug\net5.0\MyMarket.Infrastructure.AssemblyInfo.cs
+C:\Users\Baran\Desktop\MyMarket_Vs\MyMarket.Infrastructure\obj\Debug\net5.0\MyMarket.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\Baran\Desktop\MyMarket_Vs\MyMarket.Infrastructure\obj\Debug\net5.0\MyMarket.Infrastructure.dll
+C:\Users\Baran\Desktop\MyMarket_Vs\MyMarket.Infrastructure\obj\Debug\net5.0\ref\MyMarket.Infrastructure.dll
+C:\Users\Baran\Desktop\MyMarket_Vs\MyMarket.Infrastructure\obj\Debug\net5.0\MyMarket.Infrastructure.pdb

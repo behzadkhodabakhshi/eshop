@@ -1,0 +1,52 @@
+﻿@using MyMarket.Application.Services.Common.GetMenuItem;
+@using EndPoint.Utilities;
+@model List<GetMenuItemDto>
+@{
+    Layout = null;
+}
+
+
+
+@foreach (var item in Model)
+{
+
+    <li id="nav-menu-item" class="menu-item nav-overlay">
+        <a href="~/product/index?Categoryid=@item.Id" class="current-link-menu">
+            @item.Name
+        </a>
+
+        @if (item.Child.Count() > 0)
+        {
+            <ul class="sub-menu is-mega-menu mega-menu-level-two">
+
+                @foreach (var itemChild in item.Child)
+                {
+
+
+
+                    <li class="menu-mega-item menu-item-type-mega-menu">
+                        <a href="~/product/index?Categoryid=@itemChild.Id" class="current-link-menu">
+                      
+                            @itemChild.Name
+                        </a>
+                        @if (itemChild.Child.Count() > 0)
+                        {
+                    <ul class="sub-menu mega-menu-leve-three">
+                        @foreach (var itemchild_child in itemChild.Child)
+                        {
+                            <li class="menu-mega-item-three">
+                                <a href="~/product/index?Categoryid=@itemchild_child.Id" class="current-link-menu">
+                                    @itemchild_child.Name
+                                </a>
+
+                            </li>
+                        }
+                        </ul>
+                        }
+                    </li>
+                }
+
+            </ul>
+        }
+    </li>
+}

@@ -1,0 +1,395 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using MyMarket.Application.Services.Products.Commands.EditProduct;
+@model EditProductServiceDto;
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Shared/_AdminLayout.cshtml";
+}
+<section class="basic-elements">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2 class="content-header">فرم ویرایش محصول</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title-wrap bar-success">
+                        <h4 class="card-title mb-0">اطلاعات محصول را جهت ویرایش وارد نمایید</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="px-3">
+                        <div class="form">
+                            <div class="form-body">
+
+
+                                <input type="number" id="PId" value="@Model.id" hidden />
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label for="basicInput">نام محصول </label>
+                                            <input type="text" class="form-control" id="Name" value="@Model.Name">
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label for="basicInput"> برند </label>
+                                            <input type="text" class="form-control" id="Brand" value="@Model.Brand">
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label for="basicInput"> قیمت</label>
+                                            <input type="number" class="form-control" id="Price" value="@Model.Price">
+                                        </fieldset>
+                                    </div>
+                                    @if (Model.Discount>0)
+                                    {
+                                        <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                                            <fieldset class="form-group">
+                                                <label for="basicInput"> تخفیف</label>
+                                                <input type="number" class="form-control" id="Discount" value="@Model.Discount">
+                                            </fieldset>
+                                        </div>
+                                    }
+                                 
+                                    <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label for="basicInput"> تعداد موجودی</label>
+                                            <input type="number" class="form-control" id="Inventory" value="@Model.Inventory">
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label for="basicInput">نمایش داده شود؟ </label>
+                                            @if (Model.Displayed == true)
+                                            {
+                                                <input type="checkbox" class="form-control" id="Displayed" checked="checked">
+
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="form-control" id="Displayed">
+
+                                            }
+                                            <label for="basicInput">در پیشنهاد لحظه ای نمایش داده شود؟ </label>
+                                            @if (Model.InstantOffer == true)
+                                            {
+                                                <input type="checkbox" class="form-control" id="InstantOffer" checked="checked">
+
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="form-control" id="InstantOffer">
+
+                                            }
+
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label for="basicInput"> تصاویر جدید</label>
+                                            <input type="file" multiple class="form-control" accept="image/*" id="Images">
+                                        </fieldset>
+                                    </div>
+
+
+                                    <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label for="basicInput">دسته بندی </label>
+
+                                            @*<select class="form-control" id="Category" asp-items="@ViewBag.Categories"></select>*@
+                                            <select class="form-control" id="Category" asp-items="@ViewBag.Categories">
+                                                <option selected>@Model.Category</option>
+                                            </select>
+
+                                        </fieldset>
+                                    </div>
+
+                                    <table id="Pictbl_Features" class="col-md-12 table table-bordered table-hover  table-condensed table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    تصویر
+                                                </th>
+
+                                                <th>
+                                                    ویرایش
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.ProductImages)
+                                            {
+
+
+                                                <tr>
+                                                    <td style="width:100px;height:100px">
+                                                        <img src="~/@item.Src" width:100px; height:100px; />
+                                                    </td>
+
+                                                    <td>
+                                                        <a class="PicidFeatures btnDelete btn btn-danger" onclick="RemoveImage(@item.Id)"> حذف </a>
+                                                    </td>
+                                                </tr>
+
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                    <div class="col-xl-12 col-lg-12 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label for="basicInput"> توضیحات</label>
+                                            <textarea id="Description" class="form-control " rows="5">@Model.Description</textarea>
+                                        </fieldset>
+                                    </div>
+
+                                    <hr />
+                                    <hr />
+                                    <table id="EMtbl_Features" class="col-md-12 table table-bordered table-hover  table-condensed table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    نام ویژگی
+                                                </th>
+                                                <th>
+                                                    مقدار ویژگی
+                                                </th>
+                                                <th>
+                                                    ویرایش
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.productFeatures)
+                                            {
+
+
+                                                <tr>
+                                                    <td>  @item.DisplayName </td>
+                                                    <td>   @item.Value  </td>
+                                                    <td>
+                                                        <a class="EMidFeatures btnDelete btn btn-danger" onclick="RemoveFeatures(@item.Id)"> حذف </a>
+                                                    </td>
+                                                </tr>
+
+                                            }
+                                        </tbody>
+                                    </table>
+
+
+
+                                    <div class="col-xl-2 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label for="basicInput"> نام ویژگی جدید </label>
+                                            <input type="text" class="form-control" id="txtDisplayName" placeholder="نام ویژگی جدید" />
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-xl-2 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label for="basicInput"> مقدار ویژگی جدید </label>
+                                            <input type="text" class="form-control" id="txtValue" placeholder="مقدار ویژگی جدید" />
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-2 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <br />
+                                            <a class="btn btn-success" id="EbtnAddFeatures">افزودن</a>
+                                        </fieldset>
+                                    </div>
+
+
+
+                                    <br class="clear" />
+
+                                    <table id="Etbl_Features" class="col-md-12 table table-bordered table-hover  table-condensed table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    نام ویژگی
+                                                </th>
+                                                <th>
+                                                    مقدار ویژگی
+                                                </th>
+                                                <th>
+
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+
+
+
+
+
+                                    <div class="col-xl-12 col-lg-12 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <br />
+                                            <a id="btneditProduct" class="btn btn-success col-md-12"> ویرایش محصول  </a>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+@section Scripts
+{
+
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+
+
+    <script>
+
+        $("#EbtnAddFeatures").on("click", function () {
+
+            var txtDisplayName = $("#txtDisplayName").val();
+            var txtValue = $("#txtValue").val();
+
+            if (txtDisplayName == "" || txtValue == "") {
+                swal.fire(
+                    'هشدار!',
+                    "نام و مقدار را باید وارد کنید",
+                    'warning'
+                );
+            }
+            else {
+                $('#Etbl_Features tbody').append('<tr> <td>' + txtDisplayName + '</td>  <td>' + txtValue + '</td> <td> <a class="idFeatures btnDelete btn btn-danger"> حذف </a> </td> </tr>');
+                $("#txtDisplayName").val('');
+                $("#txtValue").val('');
+            }
+        });
+
+        $("#Etbl_Features").on('click', '.idFeatures', function () {
+            $(this).closest('tr').remove();
+        });
+        ///////////////////////////////////////////////////////////////////////////////
+
+        $("#Pictbl_Features").on('click', '.PicidFeatures', function () {
+            $(this).closest('tr').remove();
+        });
+
+        function RemoveImage(id) {
+            $.get("/Admin/Product/RemoveImage/" + id, function (result) {
+                $("#index").html(result);
+                $("#PrePaymentText").val("");
+            });
+
+        }
+        ////////////////////////////////////////////////////////////////////////////////
+
+        $("#EMtbl_Features").on('click', '.EMidFeatures', function () {
+            $(this).closest('tr').remove();
+        });
+
+        function RemoveFeatures(id) {
+            $.get("/Admin/Product/RemoveFeature/" + id, function (result) {
+                $("#index").html(result);
+                $("#PrePaymentText").val("");
+            });
+
+        }
+
+
+
+
+
+        $('#btneditProduct').on('click', function () {
+
+            var data = new FormData();
+
+            //دریافت مقادیر از تکس باکس ها و....
+            data.append("Id", $("#PId").val());
+            data.append("Name", $("#Name").val());
+            data.append("Brand", $("#Brand").val());
+            data.append("Price", $("#Price").val());
+            data.append("Discount", $("#Discount").val());
+            data.append("Inventory", $("#Inventory").val());
+            data.append("Displayed", $("#Displayed").prop("checked") == true ? true : false);
+            data.append("InstantOffer", $("#InstantOffer").prop("checked") == true ? true : false);
+            data.append("CategoryId", $('#Category').find('option:selected').val());
+            data.append("Description", $("#Description").val());
+            //دریافت عکس های انتخاب شده توسط کاربر و قرار دادن عکس ها در متغیر data
+            var productImages = document.getElementById("Images");
+
+            if (productImages.files.length > 0) {
+                for (var i = 0; i < productImages.files.length; i++) {
+                    data.append('Images-' + i, productImages.files[i]);
+                }
+            }
+
+            //دریافت ویژگی های محصول از جدول
+            var dataFeaturesViewModel = $('#Etbl_Features tr:gt(0)').map(function () {
+                return {
+                    DisplayName: $(this.cells[0]).text(),
+                    Value: $(this.cells[1]).text(),
+                };
+            }).get();
+
+            $.each(dataFeaturesViewModel, function (i, val) {
+                data.append('[' + i + '].DisplayName', val.DisplayName);
+                data.append('[' + i + '].Value', val.Value);
+
+            });
+
+            // ارسال اطلاعات بع کنترلر
+            var ajaxRequest = $.ajax({
+                type: "POST",
+                url: "Edit",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: function (data) {
+
+                    if (data.isSuccess == true) {
+
+                        swal.fire(
+                            'موفق!',
+                            data.message,
+                            'success'
+                        ).then(function (isConfirm) {
+                            window.location.href = "/Product/Index/";
+
+                        });
+                    }
+                    else {
+
+                        swal.fire(
+                            'هشدار!',
+                            data.message,
+                            'warning'
+                        );
+                    }
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
+                }
+
+            });
+
+            ajaxRequest.done(function (xhr, textStatus) {
+                // Do other operation
+            });
+
+        });
+
+
+
+    </script>
+}
